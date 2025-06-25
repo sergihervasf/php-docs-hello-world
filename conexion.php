@@ -34,6 +34,28 @@ try {
     $stmt = $pdo->query('SELECT NOW() AS fecha_actual;');
     $fila = $stmt->fetch();
     echo "Conectado correctamente. Hora del servidor: " . $fila['fecha_actual'];
+
+
+
+      $sql = "SELECT nombre, apellidos, telefono FROM agenda";
+    $stmt = $pdo->query($sql);
+
+    echo "<h2>Lista de contactos</h2>";
+    echo "<table border='1' cellpadding='5'>";
+    echo "<tr><th>Nombre</th><th>Apellidos</th><th>Teléfono</th></tr>";
+
+    // Recorrer los resultados
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['apellidos']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+
+    
 } catch (PDOException $e) {
     error_log('Error de conexión PDO: ' . $e->getMessage());
     echo "Error al conectar con la base de datos: " . htmlspecialchars($e->getMessage());
